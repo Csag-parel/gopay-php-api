@@ -1,6 +1,6 @@
 {
-  "name": "gopay/payments-sdk-php",
-  "description": "GoPay's PHP SDK for Payments REST API",
+  "name": "csap-parel/gopay-payments-sdk-php",
+  "description": "GoPay's PHP SDK for Payments REST API - json flag",
   "keywords": [
     "gopay",
     "payments",
