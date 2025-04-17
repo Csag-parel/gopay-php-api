@@ -17,7 +17,7 @@
 The simplest way to install SDK is to use [Composer](https://getcomposer.org/doc/00-intro.md):
 
 ```bash
-composer require gopay/payments-sdk-php
+composer require csap-parel/gopay-payments-sdk-php
 ```
 
 ## Basic usage
