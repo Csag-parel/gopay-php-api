@@ -15,7 +15,7 @@ class Payments
         $this->auth = $a;
     }
 
-    public function createPayment(array $rawPayment)
+    public function createPayment(array $rawPayment,?int $jsonFlag = null)
     {
         $payment = $rawPayment + [
             'target' => [
@@ -24,7 +24,7 @@ class Payments
             ],
             'lang' => $this->gopay->getConfig('language')
         ];
-        return $this->post('/payments/payment', GoPay::JSON, $payment);
+        return $this->post('/payments/payment', GoPay::JSON, $payment, $jsonFlag);
     }
 
     public function getStatus($id)
@@ -128,7 +128,7 @@ class Payments
     }
 
     /** @return \GoPay\Http\Response */
-    public function post($urlPath, $contentType, $data = null)
+    public function post($urlPath, $contentType, $data = null,?int $jsonFlag = null)
     {
         $token = $this->auth->authorize();
         if ($token->token) {
@@ -137,7 +137,8 @@ class Payments
                 "Bearer {$token->token}",
                 RequestMethods::POST,
                 $contentType,
-                $data
+                $data,
+                $jsonFlag
             );
         }
         return $token->response;

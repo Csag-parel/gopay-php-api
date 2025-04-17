@@ -31,12 +31,12 @@ class GoPay
         return $this->config[$key];
     }
 
-    public function call($urlPath, $authorization, $method, $contentType = null, $data = null)
+    public function call($urlPath, $authorization, $method, $contentType = null, $data = null,?int $jsonFlag = null)
     {
         $r = new Request($this->buildUrl($urlPath));
         $r->method = $method;
         $r->headers = $this->buildHeaders($contentType, $authorization);
-        $r->body = $this->encodeData($contentType, $data);
+        $r->body = $this->encodeData($contentType, $data, $jsonFlag);
         return $this->browser->send($r);
     }
 
@@ -61,13 +61,17 @@ class GoPay
     }
 
 
-    private function encodeData($contentType, $data)
+    private function encodeData($contentType, $data,?int $jsonFlag = null)
     {
         if ($data) {
             if ($contentType === GoPay::FORM) {
                 return http_build_query($data, "", '&');
             }
-            return json_encode($data);
+            if ($jsonFlag === null) {
+                return json_encode($data);
+            } else {
+                return json_encode($data, $jsonFlag);
+            }
         }
         return '';
     }
